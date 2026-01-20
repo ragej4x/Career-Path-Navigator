@@ -4,21 +4,23 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from datetime import datetime
+from datetime import timedelta
+
 import os
 
 # --- Configuration ---
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-change-this'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///career_sydstem.db'
+app.config['SECRET_KEY'] = 'change-this-secret-key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///career_system.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# --- CRITICAL COOKIE SETTINGS ---
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax' 
-app.config['SESSION_COOKIE_SECURE'] = False  # False is required for HTTP (not HTTPS)
-app.config['SESSION_COOKIE_HTTPONLY'] = True 
-app.config['PERMANENT_SESSION_LIFETIME'] = 3600
-
-# --- Gemini AI Setup ---
+# -------------------------------------------------
+# SESSION / COOKIE CONFIG (CRITICAL)
+# -------------------------------------------------
+app.config['SESSION_COOKIE_SECURE'] = True      # REQUIRED for HTTPS (Ngrok)
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # REQUIRED for Cross-Site Cookies
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_NAME'] = 'career_session'
 try:
     import google.generativeai as genai
     GEMINI_AVAILABLE = True
@@ -31,21 +33,25 @@ except ImportError:
 db = SQLAlchemy(app)
 
 # --- CORS: Allow Frontend to talk to Backend ---
-# This allows cookies (credentials) to pass between localhost:5500 and localhost:5000
-CORS(app, supports_credentials=True, resources={
-    r"/api/*": {
-        "origins": [
-            "http://127.0.0.1:5500",  # VS Code Live Server (IP)
-            "http://localhost:5500",  # VS Code Live Server (Name)
-            "http://127.0.0.1:8000",  # Python Simple Server
-            "http://localhost:8000"
-            "https://perpetuable-mable-slumberously.ngrok-free.dev"
-        ],
-        "methods": ["GET", "POST", "OPTIONS", "DELETE", "PUT"],
-        "allow_headers": ["Content-Type", "Authorization"],
-        "supports_credentials": True
+# In app.py
+CORS(
+    app,
+    supports_credentials=True,
+    resources={
+        r"/api/*": {
+            "origins": [
+                "https://ragej4x.github.io",
+                "http://localhost:5500",
+                "http://127.0.0.1:5500",
+                "https://perpetuable-mable-slumberously.ngrok-free.dev"
+            ],
+            "allow_headers": ["Content-Type", "Authorization", "ngrok-skip-browser-warning"],
+            "methods": ["GET", "POST", "OPTIONS", "DELETE", "PUT"]
+        }
     }
-})
+)
+
+
 
 # --- Models ---
 class User(db.Model):
@@ -77,6 +83,10 @@ def login_required(f):
     return decorated_function
 
 # --- Routes ---
+@app.after_request
+def add_header(response):
+    response.headers['ngrok-skip-browser-warning'] = 'true'
+    return response
 
 @app.route('/api/register', methods=['POST'])
 def register():
