@@ -48,7 +48,7 @@ async function login(username, password) {
         localStorage.setItem('isLoggedIn', 'true');
         window.location.href = 'ProjBody.html';
     } else {
-        alert(result.data.error || 'Login failed');
+        alert(result.data.error || "Login Failed");
     }
 }
 
@@ -70,9 +70,6 @@ async function logout() {
 }
 
 async function checkAuth() {
-    const result = await apiCall('/check-auth');
-    if (!result.ok) {
-        window.location.href = 'login.html';
-    }
+    const result = await apiCall('/check-auth', 'GET');
     return result.ok;
 }
