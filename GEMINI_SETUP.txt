@@ -1,0 +1,43 @@
+# Get Your Gemini API Key
+
+To enable AI-powered career tips, you need a free Google Gemini API key.
+
+## Steps:
+
+1. Go to: https://makersuite.google.com/app/apikey
+2. Click "Create API Key" button
+3. Copy your API key
+4. Create a `.env` file in the backend folder with:
+   ```
+   GEMINI_API_KEY=your_api_key_here
+   ```
+
+5. Or set it as environment variable before running:
+   **Windows (PowerShell):**
+   ```powershell
+   $env:GEMINI_API_KEY = "your_api_key_here"
+   python app.py
+   ```
+
+   **Windows (Command Prompt):**
+   ```cmd
+   set GEMINI_API_KEY=your_api_key_here
+   python app.py
+   ```
+
+   **macOS/Linux:**
+   ```bash
+   export GEMINI_API_KEY="your_api_key_here"
+   python app.py
+   ```
+
+## Test It:
+
+After setting up, take the quiz and get recommendations - you'll see AI-powered tips for your strand!
+
+## How It Works:
+
+- When user submits quiz, Flask backend calls Gemini API
+- AI generates personalized tips for their recommended strand
+- Tips include: why the strand suits them, skills to develop, career paths, and tips for success
+- If API fails, default tips are shown automatically
