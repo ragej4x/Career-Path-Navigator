@@ -8,9 +8,11 @@ async function apiCall(endpoint, method = 'GET', body = null) {
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            // CRITICAL: Bypasses the Ngrok "browser warning" page
+            'ngrok-skip-browser-warning': 'true' 
         },
-        credentials: 'include' // CRITICAL: Sends the Session Cookie
+        credentials: 'include' // CRITICAL: Sends/Receives Session Cookies
     };
 
     if (body) {
@@ -19,21 +21,22 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
     try {
         const response = await fetch(`${API_BASE}${endpoint}`, options);
-        // Handle 401 Unauthorized globally
+        
+        // Handle Session Expiration
         if (response.status === 401) {
-            console.warn("Unauthorized access. Redirecting to login...");
+            console.warn("Session expired or unauthorized.");
+            localStorage.clear();
             if (!window.location.pathname.includes('login.html')) {
-                // Optional: Force logout if 401 happens on a protected page
-                // window.location.href = 'login.html'; 
+                window.location.href = 'login.html';
             }
             return { ok: false, error: "Unauthorized" };
         }
-        
+
         const data = await response.json();
         return { ok: response.ok, status: response.status, data: data };
     } catch (error) {
-        console.error("Network Error:", error);
-        return { ok: false, error: "Cannot connect to server" };
+        console.error("API Connection Error:", error);
+        return { ok: false, error: "Server is offline or URL is incorrect" };
     }
 }
 
@@ -72,5 +75,4 @@ async function checkAuth() {
         window.location.href = 'login.html';
     }
     return result.ok;
-
 }
