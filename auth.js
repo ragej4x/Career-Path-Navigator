@@ -1,6 +1,6 @@
 // auth.js
 // 1. Point to 127.0.0.1 explicitly to match the cookie domain
-const API_BASE = 'http://127.0.0.1:5000/api';
+const API_BASE = 'https://perpetuable-mable-slumberously.ngrok-free.dev/api';
 
 // 2. Helper to send requests with Cookies (Credentials)
 async function apiCall(endpoint, method = 'GET', body = null) {
@@ -72,4 +72,5 @@ async function checkAuth() {
         window.location.href = 'login.html';
     }
     return result.ok;
+
 }
