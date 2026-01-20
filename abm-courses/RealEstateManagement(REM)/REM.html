@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Management - Course Details</title>
+    <link rel="stylesheet" href="ProjDesign.css">
+    <style>
+     body{
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     }
+
+        .course-detail-card {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .course-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .demand-indicator {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .demand-positive {
+            color: yellow;
+        }
+
+        .course-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .about-text {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .job-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .job-salary {
+            color: #28a745;
+            font-size: 0.9em;
+        }
+
+        .universities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .university-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .university-item:hover {
+            background: #e9ecef;
+        }
+
+        .university-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .university-type {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .state-uni {
+            background: #d1f4e0;
+            color: #0f7b3d;
+        }
+
+        .private-uni {
+            background: #ffd7d7;
+            color: #c92a2a;
+        }
+
+        /* text-align intentionally NOT included */
+        .graph-label {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="course-detail-card">
+        <div class="course-header">
+            <h1>Real Estate Management</h1>
+            <div class="demand-indicator">
+                <span class="demand-positive">Moderate Demand</span>
+            </div>
+        </div>
+
+        <div class="course-body">
+
+            <!-- About Section -->
+            <div class="section">
+                <h2>About the Course</h2>
+                <p class="about-text">
+                   A Bachelor of Science in Real Estate Management (BSREM) is a 4-year program that prepares graduates for careers in property brokerage, 
+                   appraisal, development, and consultancy, blending business principles with real estate laws and practices, leading to licensure exams 
+                   for brokers, appraisers, and consultants. Graduates can work in various roles like property manager, sales agent, investment analyst, 
+                   or government assessor, focusing on property valuation, investment, marketing, and legal aspects. 
+                </p>
+            </div>
+
+            <!-- Majors / Specializations -->
+            <div class="section">
+                <h2>Majors / Specializations</h2>
+                <div class="jobs-grid">
+                    <div class="job-card"><div class="job-title">Property Management</div></div>
+                    <div class="job-card"><div class="job-title">Real Estate Brokerage</div></div>
+                    <div class="job-card"><div class="job-title">Appraisal & Valuation</div></div>
+                    <div class="job-card"><div class="job-title">Urban Planning</div></div>
+                    <div class="job-card"><div class="job-title">Investment & Asset Management</div></div>
+                    <div class="job-card"><div class="job-title">Real Estate Consulting</div></div>
+                </div>
+            </div>
+
+            <!-- Career Opportunities -->
+            <div class="section">
+                <h2>Career Opportunities</h2>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <div class="job-title">Real Estate Broker</div>
+                        <div class="job-salary">₱25,000 - ₱150,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Property Manager</div>
+                        <div class="job-salary">₱30,000 - ₱140,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Appraiser / Valuer</div>
+                        <div class="job-salary">₱28,000 - ₱130,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Real Estate Consultant</div>
+                        <div class="job-salary">₱35,000 - ₱160,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Urban Planner</div>
+                        <div class="job-salary">₱32,000 - ₱150,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Investment Manager</div>
+                        <div class="job-salary">₱40,000 - ₱180,000/month</div>
+                    </div>
+
+                    <div class="graph-label">Entry Level - Senior</div>
+                </div>
+            </div>
+
+            <!-- Universities -->
+            <div class="section">
+                <h2>Universities in the Philippines (Luzon)</h2>
+                <div class="universities-list">
+                    <div class="university-item">
+                        <span class="university-name">University of the Philippines Diliman</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Polytechnic University of the Philippines</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Far Eastern University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Mapúa University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+
+                    <div class="graph-label">
+                        These universities offer BS in Real Estate Management
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Science - Course Details</title>
+    <link rel="stylesheet" href="ProjDesign.css">
+    <style>
+     body{
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     
+
+    }
+        .course-detail-card {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .course-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .demand-indicator {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .demand-positive {
+            color:red;
+        }
+
+        .course-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .about-text {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .job-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .job-salary {
+            color: #28a745;
+            font-size: 0.9em;
+        }
+
+        .universities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .university-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .university-item:hover {
+            background: #e9ecef;
+        }
+
+        .university-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .university-type {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .state-uni {
+            background: #d1f4e0;
+            color: #0f7b3d;
+        }
+
+        .private-uni {
+            background: #ffd7d7;
+            color: #c92a2a;
+        }
+
+        .demand-graph {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .graph-bar {
+            height: 40px;
+            background: linear-gradient(90deg, #667eea 0%, #4ade80 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            color: white;
+            font-weight: bold;
+            animation: growBar 1.5s ease-out;
+        }
+
+        @keyframes growBar {
+            from { width: 0%; }
+        }
+
+        .graph-label {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="course-detail-card">
+        <div class="course-header">
+            <h1>Physics</h1>
+            <div class="demand-indicator">
+                <span class="demand-positive">Low Demand</span> 
+            </div>
+        </div>
+
+        <div class="course-body">
+            <!-- About Section -->
+            <div class="section">
+                <h2>About the Course</h2>
+                <p class="about-text">
+                    A Bachelor of Science (BS) in Physics is a 4-year (or sometimes 5-year) undergraduate degree providing deep understanding of matter, energy, space,
+                    and time, covering mechanics, electromagnetism, quantum mechanics, and experimental skills, preparing graduates for careers in research, tech, healthcare, 
+                    finance, education, or further graduate studies through rigorous math, analysis, and thesis work. Programs often offer specializations like materials science,
+                    medical physics, or engineering physics, focusing on practical applications. 
+                </p>
+            </div>
+
+            <!-- Majors/Specializations -->
+            <div class="section">
+                <h2>Majors/Specializations</h2>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <div class="job-title">Optical Physics</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Electromagnetic Physics</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Relativity Physics</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Thermodynamics</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Nuclear Physics</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Quantum Physics</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Opportunities -->
+            <div class="section">
+                <h2>Career Opportunities</h2>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <div class="job-title">Optical Physicist</div>
+                        <div class="job-salary">₱35,000 - ₱72,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Electromagnetic Physicist</div>
+                        <div class="job-salary">₱23,000 - ₱80,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Relativity Physicist</div>
+                        <div class="job-salary">₱58,000 - ₱100,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Thermodynamics Engineer</div>
+                        <div class="job-salary">₱48,000 - ₱85,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Nuclear Physicist</div>
+                        <div class="job-salary">₱68,000 - ₱100,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Quantum Physicist</div>
+                        <div class="job-salary">₱68,000 - ₱120,000/month</div>
+                    </div>
+                    <div class="graph-label">Entry Level - Senior</div>
+                </div>
+            </div>
+
+            <!-- Universities -->
+            <div class="section">
+                <h2>Universities in the Philippines (Luzon)</h2>
+                <div class="universities-list">
+                    <div class="university-item">
+                        <span class="university-name">University of the Philippines Diliman</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Polytechnic University of the Philippines</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                     <div class="university-item">
+                        <span class="university-name">University of the Philippines Manila</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                     <div class="university-item">
+                        <span class="university-name">University of the Philippines Baguio</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Ateneo de Manila University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">University of Santo Tomas</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Mapúa University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    
+                    <div class="graph-label">These Universities Offer Bachelor of Science in Physics</div>
+                </div>
+            </div>
+
+            
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

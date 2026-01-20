@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HUMSS</title>
+  <link rel="stylesheet" href="../ProjDesign.css" />
+  <style>
+  
+    .card {
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      max-height: 300px; 
+    }
+    .card.expanded {
+      grid-column: span 2; 
+      max-height: none;
+    }
+   .card-content {
+  display: none;
+  margin-top: 10px;
+  color: #444;
+  font-size: 0.95em;
+  line-height: 1.5;
+   background: #f8f9fa;      
+  border-left: 4px solid #667eea; 
+  padding: 10px 15px;
+  font-weight: 500;         
+  margin-bottom: 20px;  
+}
+    .card.expanded .card-content {
+      display: block;
+    }
+.content h2{
+  color: #667eea;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>HUMSS Strand</h1>
+      <p>Humanities and Social Sciences</p>
+    </header>
+
+    <div class="content">
+      <h2>GRADE 11 HUMSS SUBJECTS</h2>
+      <div class="card-grid">
+        
+        <div class="card">
+          <h3>Philippine Politics and Governance(PPG)</h3>
+          <div class="card-content">This subject explores how politics works in the Philippines, including the concepts of power, state, and governance. Students learn about political ideologies, how they shape governments, and how they influence society. The subject covers the Philippine Constitution, the difference between state and nation, and the role of citizens in governance. It also discusses real-world issues such as elections, citizen participation, human rights, and the rule of law. Students apply these ideas through research, debates, and presentations to analyze and critique political issues.</div>
+        </div>
+
+        <div class="card">
+          <h3>Statistics and Probability</h3>
+          <div class="card-content">This subject focuses on understanding random variables, probability distributions, and statistical inference. Students learn sampling, estimation, hypothesis testing, correlation, and regression. Key competencies include distinguishing discrete and continuous random variables, constructing probability distributions, understanding sampling distributions, formulating hypotheses, computing test statistics, and analyzing relationships between variables. It helps students interpret data and make decisions based on statistical evidence.</div>
+        </div>
+
+        <div class="card">
+          <h3>Introduction to World Religions and Belief System</h3>
+          <div class="card-content">This subject introduces students to major world religions such as Christianity, Islam, Hinduism, Buddhism, and others, along with various belief systems. Students explore their historical backgrounds, core beliefs, practices, and values. The goal is to build understanding and respect for different religions and cultures while helping students appreciate their own beliefs. The subject also examines broader ideas such as worldview, spirituality, and the philosophy of religion.</div>
+        </div>
+
+        <div class="card">
+          <h3>Empowerment Technologies(ETECH)</h3>
+          <div class="card-content">This subject teaches the use of information and communication technology (ICT) for creating content, collaborating, and communicating. Students learn about online platforms, online safety, ethics, and digital etiquette. The subject helps students become digitally literate, creative, and responsible technology users.</div>
+        </div>
+
+        <div class="card">
+          <h3>Practical Research 1</h3>
+          <div class="card-content">Practical Research 1 focuses on qualitative research. Students learn the purpose and value of research, as well as the difference between qualitative and quantitative approaches. They design a research project, create a research title, define scope and limitations, review related literature, collect data through interviews or observation, analyze themes and patterns, draw conclusions, and write a research paper.</div>
+        </div>
+
+        <div class="card">
+          <h3>Reading and Writing Skills</h3>
+          <div class="card-content">This subject develops strong reading comprehension and academic/professional writing skills. Students learn how ideas in texts are organized and connected. They study different patterns of development in writing such as narration, description, definition, exemplification, comparison/contrast, cause and effect, problem and solution, and persuasion. The subject also teaches the properties of a well-written text, including organization, coherence, proper language use, and correct mechanics. Students practice critiquing texts and writing academic outputs like critiques, research reports, project proposals, resumes, and job application letters.</div>
+        </div>
+
+        <div class="card">
+          <h3>Creative Writing/Malikhaing Pagsulat</h3>
+          <div class="card-content">This course focuses on creative expression through writing. Students practice writing fiction, poetry, and other creative forms. The subject covers the creative writing process, including developing persona, structuring narratives, and discovering themes. Students are encouraged to explore different styles, experiment with structure, and refine their writing skills and personal writing voice.</div>
+        </div>
+
+        <div class="card">
+          <h3>Physical Science</h3>
+          <div class="card-content">This subject covers basic scientific principles that apply to both living and nonliving systems. It uses a multidisciplinary approach, integrating scientific models, theories, and laws. Students learn how science connects to everyday life and real-world issues, not just laboratory settings. The subject develops skills in observation, forming hypothesis, analyzing data, and understanding sustainability and scientific applications in society.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Expand card on click
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+      });
+    });
+  </script>
+</body>
+</html>

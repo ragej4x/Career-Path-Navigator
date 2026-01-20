@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>STEM</title>
+  <link rel="stylesheet" href="../ProjDesign.css" />
+  <style>
+    
+    .card {
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      max-height: 300px; 
+    }
+    .card.expanded {
+      grid-column: span 2; 
+      max-height: none;
+    }
+   .card-content {
+  display: none;
+  margin-top: 10px;
+  color: #444;
+  font-size: 0.95em;
+  line-height: 1.5;
+   background: #f8f9fa;      
+  border-left: 4px solid #667eea; 
+  padding: 10px 15px;
+  font-weight: 500;         
+  margin-bottom: 20px;  
+}
+    .card.expanded .card-content {
+      display: block;
+    }
+.content h2{
+  color: #667eea;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>STEM Strand</h1>
+      <p>Science, Technology, Engineering, Mathematics</p>
+    </header>
+
+    <div class="content">
+      <h2>GRADE 11 STEM SUBJECT</h2>
+      <div class="card-grid">
+        
+        <div class="card">
+          <h3>Reading and Writing Skills</h3>
+          <div class="card-content">This subject develops strong reading comprehension and academic/professional writing skills. Students learn how ideas in texts are organized and connected. They study different patterns of development in writing such as narration, description, definition, exemplification, comparison/contrast, cause and effect, problem and solution, and persuasion. The subject also teaches the properties of a well-written text, including organization, coherence, proper language use, and correct mechanics. Students practice critiquing texts and writing academic outputs like critiques, research reports, project proposals, resumes, and job application letters.</div>
+        </div>
+
+        <div class="card">
+          <h3>Statistics and Probability</h3>
+          <div class="card-content">This subject focuses on understanding random variables, probability distributions, and statistical inference. Students learn sampling, estimation, hypothesis testing, correlation, and regression. Key competencies include distinguishing discrete and continuous random variables, constructing probability distributions, understanding sampling distributions, formulating hypotheses, computing test statistics, and analyzing relationships between variables. It helps students interpret data and make decisions based on statistical evidence.</div>
+        </div>
+
+        <div class="card">
+          <h3>Pagbasa at Pagsusuri ng Iba't Ibang Teksto Tungo sa Pananaliksik</h3>
+          <div class="card-content">This Filipino subject trains students to read, analyze, and respond to different types of texts to prepare them for research. Students identify text types and analyze their structure and purpose. They learn concepts related to research such as theoretical and conceptual frameworks and empirical data. The subject covers the research process: defining objectives, choosing methods, gathering data, analyzing findings, and applying ethical research practices. Students also review existing research and write a short research paper.</div>
+        </div>
+
+        <div class="card">
+          <h3>Chemistry 2</h3>
+          <div class="card-content">This subject continues from Chemistry 1 and covers intermolecular forces, phases of matter, solutions, thermochemistry, kinetics, equilibrium, acids and bases, and electrochemistry. It deepens understanding of chemical reactions, how they occur, and the energy changes involved. It is important for students pursuing science-related careers such as engineering and pharmacy</div>
+        </div>
+
+        <div class="card">
+          <h3>Basic Calculus</h3>
+          <div class="card-content">This subject introduces foundational calculus concepts including limits, continuity, differentiation, and integration. Students learn to approximate areas under curves, compute definite integrals, use the Fundamental Theorem of Calculus, apply substitution in integrals, and solve problems involving rates of change and area. It prepares students for college-level STEM courses and is essential for physics, engineering, and higher mathematics.</div>
+        </div>
+
+        <div class="card">
+          <h3>Practical Research</h3>
+          <div class="card-content">Practical Research 1 focuses on qualitative research. Students learn the purpose and value of research, as well as the difference between qualitative and quantitative approaches. They design a research project, create a research title, define scope and limitations, review related literature, collect data through interviews or observation, analyze themes and patterns, draw conclusions, and write a research report.</div>
+        </div>
+
+        <div class="card">
+          <h3>Empowerment Technologies (ETECH)</h3>
+          <div class="card-content">This subject teaches the use of information and communication technology (ICT) for creating content, collaborating, and communicating. Students learn about online platforms, online safety, ethics, and digital etiquette. The subject helps students become digitally literate, creative, and responsible technology users.</div>
+        </div>
+
+        <div class="card">
+          <h3>Disaster Readiness and Risk Reduction (DRRR)</h3>
+          <div class="card-content">This subject applies scientific knowledge to real-world disasters. Students learn about hazards, risks, vulnerability, and disaster concepts. They study different types of hazards such as geological, hydrometeorological, and fire-related hazards and their impact on communities. The subject covers preparedness and mitigation measures, evacuation planning, survival kits, and disaster management systems in the Philippines. It helps students develop awareness and skills for community safety and disaster resilience.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Expand card on click
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+      });
+    });
+  </script>
+  
+</body>
+</html>

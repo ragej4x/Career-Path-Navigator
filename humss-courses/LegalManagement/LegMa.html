@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Management - Course Details</title>
+    <link rel="stylesheet" href="ProjDesign.css">
+    <style>
+     body{
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     
+
+    }
+        .course-detail-card {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .course-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .demand-indicator {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .demand-positive {
+            color: rgb(30, 255, 0);
+        }
+
+        .course-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .about-text {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .job-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .job-salary {
+            color: #28a745;
+            font-size: 0.9em;
+        }
+
+        .universities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .university-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .university-item:hover {
+            background: #e9ecef;
+        }
+
+        .university-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .university-type {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .state-uni {
+            background: #d1f4e0;
+            color: #0f7b3d;
+        }
+
+        .private-uni {
+            background: #ffd7d7;
+            color: #c92a2a;
+        }
+
+        .demand-graph {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .graph-bar {
+            height: 40px;
+            background: linear-gradient(90deg, #667eea 0%, #4ade80 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            color: white;
+            font-weight: bold;
+            animation: growBar 1.5s ease-out;
+        }
+
+        @keyframes growBar {
+            from { width: 0%; }
+        }
+
+        .graph-label {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="course-detail-card">
+        <div class="course-header">
+            <h1>Legal Management</h1>
+            <div class="demand-indicator">
+                <span class="demand-positive">Moderate to High Demand</span> 
+            </div>
+        </div>
+
+        <div class="course-body">
+            <!-- About Section -->
+            <div class="section">
+                <h2>About the Course</h2>
+                <p class="about-text">
+                    BA/BS Legal Management is a pre-law program that combines legal studies with business management, preparing students for law school or legal-related careers in business and government. The curriculum covers business law, constitutional law, legal research and writing, corporate governance, contract law, taxation, labor law, and business ethics. Students develop strong analytical, research, and communication skills essential for legal practice. This program is ideal for those planning to pursue a law degree or careers in legal compliance and corporate governance.
+                </p>
+            </div>
+
+            <!-- Career Opportunities -->
+            <div class="section">
+                <h2>Career Opportunities</h2>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <div class="job-title">Legal Assistant/Paralegal</div>
+                        <div class="job-salary">₱20,000 - ₱55,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Compliance Officer</div>
+                        <div class="job-salary">₱30,000 - ₱90,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Corporate Secretary</div>
+                        <div class="job-salary">₱35,000 - ₱100,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Contract Administrator</div>
+                        <div class="job-salary">₱28,000 - ₱75,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Legal Researcher</div>
+                        <div class="job-salary">₱22,000 - ₱60,000/month</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Risk Management Officer</div>
+                        <div class="job-salary">₱32,000 - ₱95,000/month</div>
+                    </div>
+                    <div class="graph-label">Entry Level - Senior (Before Law School)</div>
+                </div>
+            </div>
+
+            <!-- Universities -->
+            <div class="section">
+                <h2>Universities in the Philippines (Luzon)</h2>
+                <div class="universities-list">
+                    <div class="university-item">
+                        <span class="university-name">Ateneo de Manila University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">De La Salle University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">University of Santo Tomas</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Far Eastern University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Adamson University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">San Beda University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Lyceum of the Philippines University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Arellano University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="graph-label">These Universities Offer Legal Management Programs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

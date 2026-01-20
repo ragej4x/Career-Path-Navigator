@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Science - Course Details</title>
+    <link rel="stylesheet" href="ProjDesign.css">
+    <style>
+     body{
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     
+
+    }
+        .course-detail-card {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .course-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .demand-indicator {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .demand-positive {
+            color: rgb(30, 255, 0);
+        }
+
+        .course-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .about-text {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .job-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .job-salary {
+            color: #28a745;
+            font-size: 0.9em;
+        }
+
+        .universities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .university-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .university-item:hover {
+            background: #e9ecef;
+        }
+
+        .university-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .university-type {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .state-uni {
+            background: #d1f4e0;
+            color: #0f7b3d;
+        }
+
+        .private-uni {
+            background: #ffd7d7;
+            color: #c92a2a;
+        }
+
+        .demand-graph {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .graph-bar {
+            height: 40px;
+            background: linear-gradient(90deg, #667eea 0%, #4ade80 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            color: white;
+            font-weight: bold;
+            animation: growBar 1.5s ease-out;
+        }
+
+        @keyframes growBar {
+            from { width: 0%; }
+        }
+
+        .graph-label {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <main class="course-detail-card">
+        <div class="course-header">
+            <h1>Medical Technology</h1>
+            <div class="demand-indicator">
+                <span class="demand-positive">High Demand</span> 
+            </div>
+        </div>
+
+        <div class="course-body">
+            <!-- About Section -->
+            <description class="section">
+                <h2>About the Course</h2>
+                <p class="about-text">
+                    A Bachelor of Science in Medical Technology (BSMT) is a four-year undergraduate program focused on laboratory diagnostics, training students in clinical chemistry, hematology, 
+                    microbiology, blood banking, and more, culminating in a year-long internship to prepare them as licensed Medical Technologists (MTs) for roles in disease detection, prevention, 
+                    and treatment in various healthcare settings
+                </p>
+            </description>
+
+            <!-- Majors/Specializations -->
+            <major class="section">
+                <h2>Majors/Specializations</h2>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <div class="job-title">Clinical Chemistry</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Hematology</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Microbiology</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Blood Banking</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Urinalysis</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Immunology</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Serology</div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">Parasitology</div>
+                    </div>
+                </div>
+            </major>
+
+            <!-- Career Opportunities -->
+            <career class="section">
+                <h2>Career Opportunities</h2>
+                <div class="jobs-grid">
+                    <job class="job-card">
+                        <div class="job-title">Medical Laboratory Scientist</div>
+                        <div class="job-salary">₱12,000 - ₱40,000/month</div>
+                    </job>
+                    <job class="job-card">
+                        <div class="job-title">Phlebotomist</div>
+                        <div class="job-salary">₱15,000 - ₱35,000/month</div>
+                    </job>
+                    <job class="job-card">
+                        <div class="job-title">Nuclear Medicine Technologist</div>
+                        <div class="job-salary">₱15,000 - ₱50,000/month</div>
+                    </job>
+                    <job class="job-card">
+                        <div class="job-title">UltraSound Technologist</div>
+                        <div class="job-salary">₱15,000 - ₱30,000/month</div>
+                    </job>
+                    <job class="job-card">
+                        <div class="job-title">Histotechnologist</div>
+                        <div class="job-salary">₱20,000 - ₱40,000/month</div>
+                    </job>
+                    <job class="job-card">
+                        <div class="job-title">Cardiovascular Technologist</div>
+                        <div class="job-salary">₱15,000 - ₱30,000/month</div>
+                    </job>
+                    <exp class="graph-label">Entry Level - Senior</exp>
+                </div>
+            </career>
+
+            <!-- Universities -->
+            <div class="section">
+                <h2>Universities in the Philippines (Luzon)</h2>
+                <uni class="universities-list">
+                    <div class="university-item">
+                        <span class="university-name">Cavite State University</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">Bulacan State University</span>
+                        <span class="university-type state-uni">State University</span>
+                    </div>
+                    <div class="university-item">
+                        <span class="university-name">University of Santo Tomas</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+
+                    <div class="university-item">
+                        <span class="university-name">Mapúa University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+
+                    <div class="university-item">
+                        <span class="university-name">Far Eastern University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+
+                    <div class="university-item">
+                        <span class="university-name">National University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+
+                    <div class="university-item">
+                        <span class="university-name">Manila Central University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    
+                    <div class="university-item">
+                        <span class="university-name">Castro Escolar University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    
+                   
+                    
+                    <div class="university-item">
+                        <span class="university-name">Lyceum OF the Philippines University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    
+                    <div class="university-item">
+                        <span class="university-name">Metropolitan Medical Center - College of Arts, Science & Technology</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    
+                    <div class="university-item">
+                        <span class="university-name">National University</span>
+                        <span class="university-type private-uni">Private</span>
+                    </div>
+                    <div class="graph-label">These Universities Offer Bachelor of Science in Medical Technology</div>
+                </uni>
+            </div>
+
+           
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
