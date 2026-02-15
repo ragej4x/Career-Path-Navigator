@@ -1,6 +1,6 @@
 // auth.js
 // 1. Point to 127.0.0.1 explicitly to match the cookie domain
-const API_BASE = 'https://perpetuable-mable-slumberously.ngrok-free.dev/api';
+const API_BASE = 'http://127.0.0.1:9000/api';
 
 // 2. Helper to send requests with Cookies (Credentials)
 async function apiCall(endpoint, method = 'GET', body = null) {
@@ -46,7 +46,7 @@ async function login(username, password) {
     if (result.ok) {
         localStorage.setItem('username', result.data.username);
         localStorage.setItem('isLoggedIn', 'true');
-        window.location.href = 'ProjBody.html';
+        window.location.href = 'index.html';
     } else {
         alert(result.data.error || "Login Failed");
     }
@@ -57,7 +57,7 @@ async function register(username, email, password) {
     if (result.ok) {
         localStorage.setItem('username', username);
         localStorage.setItem('isLoggedIn', 'true');
-        window.location.href = 'ProjBody.html';
+        window.location.href = 'index.html';
     } else {
         alert(result.data.error || 'Registration failed');
     }

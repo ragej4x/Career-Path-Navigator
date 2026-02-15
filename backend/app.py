@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import os
 
@@ -15,16 +14,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///career_system.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # -------------------------------------------------
-# SESSION / COOKIE CONFIG (CRITICAL)
+# SESSION / COOKIE CONFIG
 # -------------------------------------------------
-app.config['SESSION_COOKIE_SECURE'] = True      # REQUIRED for HTTPS (Ngrok)
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'  # REQUIRED for Cross-Site Cookies
+app.config['SESSION_COOKIE_SECURE'] = False     # False for local HTTP, True for HTTPS/Ngrok
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'   # Lax for local testing, None for Ngrok
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_NAME'] = 'career_session'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+
 try:
     import google.generativeai as genai
     GEMINI_AVAILABLE = True
-    GEMINI_API_KEY = 'AIzaSyB03C_gu7H9Lt7AY4Cr6_Qm3vvazQk4x18'
+    GEMINI_API_KEY = 'AIzaSyC-GZnRcG95eG0p4tnN_7U25hyxbIY8Idg'
     genai.configure(api_key=GEMINI_API_KEY)
 except ImportError:
     GEMINI_AVAILABLE = False
@@ -32,26 +33,27 @@ except ImportError:
 
 db = SQLAlchemy(app)
 
-# --- CORS: Allow Frontend to talk to Backend ---
-# In app.py
+# --- CORS Configuration ---
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:9000",
+    "http://127.0.0.1:9000",
+    "https://ragej4x.github.io",
+    "https://perpetuable-mable-slumberously.ngrok-free.dev"
+]
+
 CORS(
     app,
     supports_credentials=True,
-    resources={
-        r"/api/*": {
-            "origins": [
-                "https://ragej4x.github.io",
-                "http://localhost:5500",
-                "http://127.0.0.1:5500",
-                "https://perpetuable-mable-slumberously.ngrok-free.dev"
-            ],
-            "allow_headers": ["Content-Type", "Authorization", "ngrok-skip-browser-warning"],
-            "methods": ["GET", "POST", "OPTIONS", "DELETE", "PUT"]
-        }
-    }
+    origins=origins,
+    allow_headers=["Content-Type", "Authorization", "ngrok-skip-browser-warning"],
+    methods=["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"]
 )
-
-
 
 # --- Models ---
 class User(db.Model):
@@ -88,116 +90,194 @@ def add_header(response):
     response.headers['ngrok-skip-browser-warning'] = 'true'
     return response
 
-@app.route('/api/register', methods=['POST'])
-def register():
-    data = request.get_json()
-    if User.query.filter_by(username=data.get('username')).first():
-        return jsonify({'error': 'Username exists'}), 409
-    
-    user = User(username=data['username'], email=data['email'])
-    user.set_password(data['password'])
-    db.session.add(user)
-    db.session.commit()
-    
-    # Auto-login after register
-    session.permanent = True
-    session['user_id'] = user.id
-    session['username'] = user.username
-    return jsonify({'message': 'Registered successfully'}), 201
+@app.errorhandler(Exception)
+def handle_error(error):
+    """Handle all exceptions and return proper CORS headers"""
+    print(f"Error: {error}")
+    return jsonify({'error': str(error)}), 500
 
-@app.route('/api/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    user = User.query.filter_by(username=data.get('username')).first()
+@app.route('/api/register', methods=['POST', 'OPTIONS'])
+def register():
+    if request.method == 'OPTIONS':
+        return '', 204
     
-    if user and user.check_password(data.get('password')):
+    try:
+        data = request.get_json()
+        
+        # Validate input
+        if not data or not data.get('username') or not data.get('email') or not data.get('password'):
+            return jsonify({'error': 'Missing required fields: username, email, password'}), 400
+        
+        if User.query.filter_by(username=data.get('username')).first():
+            return jsonify({'error': 'Username exists'}), 409
+        
+        if User.query.filter_by(email=data.get('email')).first():
+            return jsonify({'error': 'Email already registered'}), 409
+        
+        user = User(username=data['username'], email=data['email'])
+        user.set_password(data['password'])
+        db.session.add(user)
+        db.session.commit()
+        
+        # Auto-login after register
         session.permanent = True
         session['user_id'] = user.id
         session['username'] = user.username
-        return jsonify({'message': 'Login successful', 'username': user.username}), 200
-    
-    return jsonify({'error': 'Invalid credentials'}), 401
+        return jsonify({'message': 'Registered successfully'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Registration failed: {str(e)}'}), 500
 
-@app.route('/api/logout', methods=['POST'])
+@app.route('/api/login', methods=['POST', 'OPTIONS'])
+def login():
+    if request.method == 'OPTIONS':
+        return '', 204
+    
+    try:
+        data = request.get_json()
+        
+        if not data or not data.get('username') or not data.get('password'):
+            return jsonify({'error': 'Missing username or password'}), 400
+        
+        user = User.query.filter_by(username=data.get('username')).first()
+        
+        if user and user.check_password(data.get('password')):
+            session.permanent = True
+            session['user_id'] = user.id
+            session['username'] = user.username
+            return jsonify({'message': 'Login successful', 'username': user.username}), 200
+        
+        return jsonify({'error': 'Invalid credentials'}), 401
+    except Exception as e:
+        return jsonify({'error': f'Login failed: {str(e)}'}), 500
+
+@app.route('/api/logout', methods=['POST', 'OPTIONS'])
 def logout():
+    if request.method == 'OPTIONS':
+        return '', 204
     session.clear()
     return jsonify({'message': 'Logged out'}), 200
 
-@app.route('/api/check-auth', methods=['GET'])
+@app.route('/api/check-auth', methods=['GET', 'OPTIONS'])
 def check_auth():
+    if request.method == 'OPTIONS':
+        return '', 204
     if 'user_id' in session:
         return jsonify({'authenticated': True, 'username': session['username']}), 200
     return jsonify({'authenticated': False}), 401
 
-@app.route('/api/quiz/save', methods=['POST'])
+@app.route('/api/quiz/save', methods=['POST', 'OPTIONS'])
 def save_quiz():
-    data = request.get_json()
-    user_id = session.get('user_id') # Will be None if not logged in
+    if request.method == 'OPTIONS':
+        return '', 204
     
-    new_result = QuizResult(user_id=user_id, result_data=data['result_data'])
-    db.session.add(new_result)
-    db.session.commit()
-    return jsonify({'message': 'Saved'}), 201
+    try:
+        data = request.get_json()
+        user_id = session.get('user_id')
+        
+        new_result = QuizResult(user_id=user_id, result_data=data['result_data'])
+        db.session.add(new_result)
+        db.session.commit()
+        return jsonify({'message': 'Saved'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
-@app.route('/api/quiz/history', methods=['GET'])
+@app.route('/api/quiz/history', methods=['GET', 'OPTIONS'])
 def get_history():
-    user_id = session.get('user_id')
-    if user_id:
-        results = QuizResult.query.filter_by(user_id=user_id).order_by(QuizResult.created_at.desc()).all()
-    else:
-        results = QuizResult.query.filter_by(user_id=None).order_by(QuizResult.created_at.desc()).limit(5).all()
-        
-    return jsonify([{
-        'id': r.id,
-        'result_data': r.result_data,
-        'created_at': r.created_at.isoformat()
-    } for r in results]), 200
+    if request.method == 'OPTIONS':
+        return '', 204
+    
+    try:
+        user_id = session.get('user_id')
+        if user_id:
+            results = QuizResult.query.filter_by(user_id=user_id).order_by(QuizResult.created_at.desc()).all()
+        else:
+            results = QuizResult.query.filter_by(user_id=None).order_by(QuizResult.created_at.desc()).limit(5).all()
+            
+        return jsonify([{
+            'id': r.id,
+            'result_data': r.result_data,
+            'created_at': r.created_at.isoformat()
+        } for r in results]), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-@app.route('/api/quiz/delete/<int:id>', methods=['DELETE'])
-@login_required
+@app.route('/api/quiz/delete/<int:id>', methods=['DELETE', 'OPTIONS'])
 def delete_quiz(id):
-    result = QuizResult.query.get(id)
-    if result and result.user_id == session['user_id']:
-        db.session.delete(result)
-        db.session.commit()
-        return jsonify({'message': 'Deleted'}), 200
-    return jsonify({'error': 'Not found or unauthorized'}), 404
+    if request.method == 'OPTIONS':
+        return '', 204
+    
+    # Check authentication
+    if 'user_id' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    try:
+        result = QuizResult.query.get(id)
+        if result and result.user_id == session['user_id']:
+            db.session.delete(result)
+            db.session.commit()
+            return jsonify({'message': 'Deleted'}), 200
+        return jsonify({'error': 'Not found or unauthorized'}), 404
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
-@app.route('/api/reflection', methods=['GET', 'POST'])
-@login_required
+@app.route('/api/reflection', methods=['GET', 'POST', 'OPTIONS'])
 def handle_reflection():
-    user = User.query.get(session['user_id'])
+    if request.method == 'OPTIONS':
+        return '', 204
     
-    if request.method == 'POST':
-        user.reflection_notes = request.json.get('reflection_notes', '')
-        db.session.commit()
-        return jsonify({'message': 'Saved'}), 200
+    # Check authentication
+    if 'user_id' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    try:
+        user = User.query.get(session['user_id'])
         
-    return jsonify({'reflection_notes': user.reflection_notes}), 200
+        if request.method == 'POST':
+            user.reflection_notes = request.json.get('reflection_notes', '')
+            db.session.commit()
+            return jsonify({'message': 'Saved'}), 200
+            
+        return jsonify({'reflection_notes': user.reflection_notes}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
-# --- NEW: Add change-password endpoint ---
-@app.route('/api/change-password', methods=['POST'])
-@login_required
+@app.route('/api/change-password', methods=['POST', 'OPTIONS'])
 def change_password():
-    data = request.get_json()
-    user = User.query.get(session['user_id'])
+    if request.method == 'OPTIONS':
+        return '', 204
     
-    if not user.check_password(data.get('current_password')):
-        return jsonify({'error': 'Current password is incorrect'}), 400
+    # Check authentication
+    if 'user_id' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
     
-    if len(data.get('new_password', '')) < 6:
-        return jsonify({'error': 'New password must be at least 6 characters'}), 400
-    
-    user.set_password(data['new_password'])
-    db.session.commit()
-    return jsonify({'message': 'Password changed successfully'}), 200
+    try:
+        data = request.get_json()
+        user = User.query.get(session['user_id'])
+        
+        if not user.check_password(data.get('current_password')):
+            return jsonify({'error': 'Current password is incorrect'}), 400
+        
+        if len(data.get('new_password', '')) < 6:
+            return jsonify({'error': 'New password must be at least 6 characters'}), 400
+        
+        user.set_password(data['new_password'])
+        db.session.commit()
+        return jsonify({'message': 'Password changed successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
-# --- Simple AI Proxy ---
-@app.route('/api/strand-tips/<strand>', methods=['GET'])
+@app.route('/api/strand-tips/<strand>', methods=['GET', 'OPTIONS'])
 def get_tips(strand):
-    # If Gemini is available, use it
-    if GEMINI_AVAILABLE and 'genai' in globals():
-        try:
+    if request.method == 'OPTIONS':
+        return '', 204
+    
+    try:
+        if GEMINI_AVAILABLE and 'genai' in globals():
             model = genai.GenerativeModel('gemini-2.5-flash')
             prompt = f"""You are a helpful career guidance counselor. A student has been recommended for the {strand} strand based on their career aptitude quiz.
 
@@ -207,21 +287,22 @@ Please provide:
 3. Top 5 potential career paths in this field
 4. Tips for excelling in this strand
 5. Opportunity and benefits
-Format your response as clear and short, concise bullet points. Be encouraging and motivational."""
+Use bullet points where appropriate, Be encouraging, clear and student-friendly, DO NOT GIVE a one-sentence or overly short answer."""
             response = model.generate_content(prompt)
             return jsonify({'tips': response.text})
-        except Exception as e:
-            print(f"AI Error: {e}")
-            
+    except Exception as e:
+        print(f"AI Error: {e}")
+    
     # Fallback if AI fails or not installed
-    return jsonify({'tips': f"Explore careers in {strand}. It offers great opportunities!"})
+    return jsonify({'tips': f"Explore careers in {strand}. It offers great opportunities!"}), 200
 
-# --- Health check endpoint ---
-@app.route('/api/health', methods=['GET'])
+@app.route('/api/health', methods=['GET', 'OPTIONS'])
 def health_check():
+    if request.method == 'OPTIONS':
+        return '', 204
     return jsonify({'status': 'healthy', 'message': 'API is running'}), 200
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=9000)

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Career Path Recommendation System</title>
+    
+    <link rel="stylesheet" href="ProjDesign.css">
+    <style>
+        .user-section {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        header {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <script src="auth.js"></script>
+    <script>
+        checkAuth();
+        // Check authentication on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Load user name
+        document.addEventListener("DOMContentLoaded", () => {
+            const userSpan = document.getElementById('userDisplay');
+            if(userSpan) userSpan.innerText = localStorage.getItem('username') || 'Student';
+        });
+    </script>
+        
+    <div class="container">
+
+        <header>
+            <div class="user-section">
+                <div class="user-info">Welcome, <span id="userDisplay">User</span></div>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+            
+            <h2>Welcome</h2>
+            <h1>🎓 Career Path Navigator</h1>
+            <p>Discover Your Perfect Strand, Course & Career Path</p>
+        </header>
+ 
+
+        <nav>
+            <button onclick="showSection('home')">Home</button>
+            <button onclick="showSection('strands')">Explore Strands</button>
+            <button onclick="showSection('quiz')">Take Quiz</button>
+            <button onclick="loadMyResults()">My Results</button>
+            <button onclick="loadProfile()">View Profile</button>
+            <button onclick="showSection('courses')">College Courses</button>
+        </nav>
+    
+
+
+        <div class="content">
+            <!-- Home Section -->
+            <div id="home" class="section active">
+                <h2>Welcome to Career Path Navigator</h2>
+                <p style="margin-bottom: 20px; color: #666; line-height: 1.6;">
+                    This platform helps Senior High School students discover suitable strands, college courses, and career paths that align with their interests and skills.
+                </p>
+                <button class="btn" onclick="showSection('strands')">Explore Strands →</button>
+            </div>
+            
+            <!-- Strands -->
+            <div id="strands" class="section">
+                <h2>Explore Strands</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>STEM</h3>
+                        <p>Science, Technology, Engineering, and Mathematics</p>
+                        <button class="btn" onclick="location.href='stem-strand/stem.html'" style="margin-top: 10px;">View Strand</button>
+                    </div>
+                    <div class="card">
+                        <h3>ABM</h3>
+                        <p>Accountancy, Business, and Management</p>
+                        <button class="btn" onclick="location.href='abm-strand/abm.html'" style="margin-top: 10px;">View Strand</button>
+                    </div>
+                    <div class="card">
+                        <h3>HUMSS</h3>
+                        <p>Humanities and Social Sciences</p>
+                        <button class="btn" onclick="location.href='humss-strand/humss.html'"  style="margin-top: 10px;">View Strand</button>
+                    </div>
+                    <div class="card">
+                        <h3>TVL</h3>
+                        <p>Technical Vocational Livelihood</p>
+                        <button class="btn" onclick="location.href='tvl tracks/tvl.html'" style="margin-top: 10px;">View Tracks</button>
+                        
+                    </div>
+                </div>
+            </div>
+            
+           <!-- Quiz Section -->
+<div id="quiz" class="section">
+  <h2>Career Recommendation Quiz</h2>
+  <p style="margin-bottom: 20px; color: #666;">
+   These questions are for incoming Grade 11 students, Answering these questions will give you recommendations on what strand to pick.
+  </p>
+  <form id="quizForm">
+
+    <!-- STEM Questions -->
+    <div class="form-group">
+      <p>Do you like solving math problems?</p>
+      <label><input type="radio" name="q1" value="yes" data-strand="STEM"> Yes</label>
+      <label><input type="radio" name="q1" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you enjoy doing science experiments?</p>
+      <label><input type="radio" name="q2" value="yes" data-strand="STEM"> Yes</label>
+      <label><input type="radio" name="q2" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you like working with computers or technology?</p>
+      <label><input type="radio" name="q3" value="yes" data-strand="STEM"> Yes</label>
+      <label><input type="radio" name="q3" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you enjoy analyzing or figuring out how things work?</p>
+      <label><input type="radio" name="q4" value="yes" data-strand="STEM"> Yes</label>
+      <label><input type="radio" name="q4" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you like science or experimenting?</p>
+      <label><input type="radio" name="q5" value="yes" data-strand="STEM"> Yes</label>
+      <label><input type="radio" name="q5" value="no"> No</label>
+    </div>
+
+    <!-- HUMSS Questions -->
+    <div class="form-group">
+      <p>Do you like writing or reading?</p>
+      <label><input type="radio" name="q6" value="yes" data-strand="HUMSS"> Yes</label>
+      <label><input type="radio" name="q6" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Are you interested in people and society?</p>
+      <label><input type="radio" name="q7" value="yes" data-strand="HUMSS"> Yes</label>
+      <label><input type="radio" name="q7" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you enjoy speaking or sharing ideas?</p>
+      <label><input type="radio" name="q8" value="yes" data-strand="HUMSS"> Yes</label>
+      <label><input type="radio" name="q8" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you like helping or listening to others?</p>
+      <label><input type="radio" name="q9" value="yes" data-strand="HUMSS"> Yes</label>
+      <label><input type="radio" name="q9" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Would you like a job that requires talking to many people?</p>
+      <label><input type="radio" name="q10" value="yes" data-strand="HUMSS"> Yes</label>
+      <label><input type="radio" name="q10" value="no"> No</label>
+    </div>
+
+    <!-- ABM Questions -->
+    <div class="form-group">
+      <p>Do you like business topics?</p>
+      <label><input type="radio" name="q11" value="yes" data-strand="ABM"> Yes</label>
+      <label><input type="radio" name="q11" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you enjoy planning or organizing things?</p>
+      <label><input type="radio" name="q12" value="yes" data-strand="ABM"> Yes</label>
+      <label><input type="radio" name="q12" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you like handling money or simple budgeting?</p>
+      <label><input type="radio" name="q13" value="yes" data-strand="ABM"> Yes</label>
+      <label><input type="radio" name="q13" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you want to learn about marketing or sales?</p>
+      <label><input type="radio" name="q14" value="yes" data-strand="ABM"> Yes</label>
+      <label><input type="radio" name="q14" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Are you interested in business, entrepreneurship, or marketing?</p>
+      <label><input type="radio" name="q15" value="yes" data-strand="ABM"> Yes</label>
+      <label><input type="radio" name="q15" value="no"> No</label>
+    </div>
+
+    <!-- TVL Questions -->
+    <div class="form-group">
+      <p>Do you enjoy tasks that require logical and analytical thinking?</p>
+      <label><input type="radio" name="q16" value="yes" data-strand="TVL"> Yes</label>
+      <label><input type="radio" name="q16" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you like fixing, building, or creating things?</p>
+      <label><input type="radio" name="q17" value="yes" data-strand="TVL"> Yes</label>
+      <label><input type="radio" name="q17" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you prefer practical tasks over long reading?</p>
+      <label><input type="radio" name="q18" value="yes" data-strand="TVL"> Yes</label>
+      <label><input type="radio" name="q18" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Are you interested in learning specific job skills?</p>
+      <label><input type="radio" name="q19" value="yes" data-strand="TVL"> Yes</label>
+      <label><input type="radio" name="q19" value="no"> No</label>
+    </div>
+    <div class="form-group">
+      <p>Do you like using technology or machines?</p>
+      <label><input type="radio" name="q20" value="yes" data-strand="TVL"> Yes</label>
+      <label><input type="radio" name="q20" value="no"> No</label>
+    </div>
+
+    <button type="submit" class="btn">Get Recommendations</button>
+  </form>
+
+  <div id="result"></div>
+</div>
+            
+            <!-- Results Section -->
+            <div id="results" class="section">
+                <h2>Your Personalized Results</h2>
+                <p style="margin-bottom: 20px; color: #666;">.</p>
+            </div>
+
+            <!-- College Courses -->
+            <div id="courses" class="section">
+                <h2>Explore College Courses Ralated To:</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>STEM</h3>
+                        <p>Science, Technology, Engineering, and Mathematics</p>
+                        <button class="btn" onclick="location.href='stem-courses/stem.html'" style="margin-top: 10px;">View Courses</button>
+                    </div>
+                    <div class="card">
+                        <h3>ABM</h3>
+                        <p>Accountancy, Business, and Management</p>
+                        <button class="btn" onclick="location.href='abm-courses/abm.html'" style="margin-top: 10px;">View Courses</button>
+                    </div>
+                    <div class="card">
+                        <h3>HUMSS</h3>
+                        <p>Humanities and Social Sciences</p>
+                        <button class="btn" onclick="location.href='humss-courses/humss.html'" style="margin-top: 10px;">View Courses</button>
+                    </div>
+                    <div class="card">
+                        <h3>TVL</h3>
+                        <p>Technical Vocational Livelihood</p>
+                        <button class="btn" onclick="location.href='tvl-courses/tvl.html'" style="margin-top: 10px;">View Courses</button>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profile" class="section" style="max-width: fit-content; margin-left: auto; margin-right: auto;">
+                <h2>User Profile</h2>
+                <div id="profileContent" style="background: #f9f9f9; padding: 30px; border-radius: 8px; max-width: 600px;">
+                    <p>Loading profile...</p>
+                </div>
+            </div>
+        </div>
+            
+        
+        <footer>
+            <p>&copy; 2025 Student Career Path Recommendation System. All rights reserved.</p>
+        </footer>
+    </div>
+<script>
+    // Remove the duplicate apiCall function since it's already in auth.js
+    // We'll use the apiCall function from auth.js
+
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    // --- Uses apiCall() from auth.js ---
+    async function deleteQuizResult(resultId) {
+        if (!confirm('Are you sure you want to delete this result?')) return;
+
+        const result = await apiCall(`/quiz/delete/${resultId}`, 'DELETE');
+        if (result.ok) {
+            alert('Deleted successfully');
+            loadMyResults();
+        } else {
+            alert('Failed to delete: ' + (result.data?.error || 'Unknown error'));
+        }
+    }
+
+    async function loadMyResults() {
+        // Use apiCall to ensure cookies are sent
+        const response = await apiCall('/quiz/history', 'GET');
+
+        if (!response.ok || !response.data || response.data.length === 0) {
+            document.getElementById('results').innerHTML = '<h2>My Quiz Results</h2><p style="color: #666;">No results found. Take a quiz to see your results!</p>';
+            showSection('results');
+            return;
+        }
+
+        let html = '<h2>My Quiz Results</h2>';
+        
+        response.data.forEach((r, index) => {
+            try {
+                const data = JSON.parse(r.result_data);
+                const date = new Date(r.created_at).toLocaleString();
+                const strand = data.recommended_strands ? data.recommended_strands[0] : 'N/A';
+                const scores = data.scores || {};
+                const tips = data.ai_tips || '';
+                
+                html += `
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #667eea;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="flex: 1;">
+                                <h3 style="color: #667eea; margin: 0 0 10px 0;">Quiz #${response.data.length - index}</h3>
+                                <p style="color: #999; margin: 5px 0;">Taken: ${date}</p>
+                                <p style="margin-top: 15px;"><strong>Recommended:</strong> <span style="color: #667eea; font-weight: bold; font-size: 1.1em;">${strand}</span></p>
+                                <p><strong>Scores:</strong> STEM: ${scores.STEM || 0} | HUMSS: ${scores.HUMSS || 0} | ABM: ${scores.ABM || 0} | TVL: ${scores.TVL || 0}</p>
+                            </div>
+                            <button onclick="deleteQuizResult(${r.id})" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 500; margin-left: 10px; transition: all 0.3s;">Delete</button>
+                        </div>
+                        ${tips ? `<div style="background: #e8f4f8; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                            <h4 style="color: #667eea; margin-top: 0;">🤖 AI Guidance</h4>
+                            <div style="white-space: pre-wrap; color: #555; font-size: 0.95em; line-height: 1.6;">${tips}</div>
+                        </div>` : ''}
+                    </div>
+                `;
+            } catch (e) { 
+                console.error('Error parsing result:', e); 
+            }
+        });
+
+        document.getElementById('results').innerHTML = html;
+        showSection('results');
+    }
+
+    function loadProfile() {
+        const username = localStorage.getItem('username') || 'User';
+        let html = `
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">
+                    ${username.charAt(0).toUpperCase()}
+                </div>
+                <h3 style="color: #333; margin: 10px 0;">${username}</h3>
+            </div>
+            <div id="reflectionSection" style="margin-bottom: 20px;">
+                <h4>My Reflection</h4>
+                <textarea id="reflectionNotes" placeholder="Share your reflections, goals, and career aspirations..." style="width: 100%; height: 150px; padding: 12px; border: 2px solid #e0e0e0; border-radius: 5px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                <button class="btn" onclick="saveReflection()" style="width: 100%; margin-top: 10px;">Save Reflection</button>
+            </div>
+            <div>
+                <button class="btn" onclick="showChangePassword()" style="width: 100%; margin-bottom: 10px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Change Password</button>
+                <button class="btn" onclick="logout()" style="width: 100%; background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);">Logout</button>
+            </div>
+        `;
+        document.getElementById('profileContent').innerHTML = html;
+        loadReflectionNotes();
+        showSection('profile');
+    }
+
+    async function loadReflectionNotes() {
+        const result = await apiCall('/reflection', 'GET');
+        if (result.ok && document.getElementById('reflectionNotes')) {
+            document.getElementById('reflectionNotes').value = result.data.reflection_notes || '';
+        } else if (result.error === "Unauthorized") {
+            // Handle unauthorized access
+            document.getElementById('reflectionNotes').value = '';
+            console.log("User not logged in for reflection");
+        }
+    }
+
+    async function saveReflection() {
+        const note = document.getElementById('reflectionNotes').value;
+        const result = await apiCall('/reflection', 'POST', { reflection_notes: note });
+        
+        if (result.ok) {
+            alert('Reflection saved!');
+        } else {
+            alert('Error saving: ' + (result.data?.error || result.error || 'Unknown error'));
+        }
+    }
+
+    function showChangePassword() {
+        const html = `
+            <h3>Change Password</h3>
+            <form id="changePasswordForm" style="max-width: 400px;">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Current Password</label>
+                    <input type="password" id="currentPass" placeholder="Enter current password" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1em;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">New Password</label>
+                    <input type="password" id="newPass" placeholder="Enter new password" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1em;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Confirm New Password</label>
+                    <input type="password" id="confirmPass" placeholder="Confirm new password" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1em;" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin-bottom: 10px;">Update Password</button>
+                <button type="button" class="btn" onclick="loadProfile()" style="width: 100%; background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);">Cancel</button>
+            </form>
+        `;
+        document.getElementById('profileContent').innerHTML = html;
+        
+        document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentPass = document.getElementById('currentPass').value;
+            const newPass = document.getElementById('newPass').value;
+            const confirmPass = document.getElementById('confirmPass').value;
+            
+            if (newPass !== confirmPass) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                alert('New password must be at least 6 characters long');
+                return;
+            }
+            
+            const result = await apiCall('/change-password', 'POST', {
+                current_password: currentPass,
+                new_password: newPass
+            });
+
+            if (result.ok) {
+                alert('Password changed successfully!');
+                loadProfile();
+            } else {
+                alert('Error: ' + (result.data?.error || result.error || 'Failed to change password'));
+            }
+        });
+    }
+
+    // Display username on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const username = localStorage.getItem('username') || 'User';
+        document.getElementById('userDisplay').textContent = username;
+    });
+</script>
+    
+    <script src="quiz.js"></script>
+</body>
+</html>
