@@ -9,8 +9,8 @@ import os
 
 # --- Configuration ---
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'change-this-secret-key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///career_system.db'
+app.config['SECRET_KEY'] = 'M4QGSqZebCuBjpFIBCMGjTGzcODl5vG6'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://cpn:M4QGSqZebCuBjpFIBCMGjTGzcODl5vG6@dpg-d68l7pjuibrs73934ucg-a.singapore-postgres.render.com/cpn'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # -------------------------------------------------
@@ -306,3 +306,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True, port=9000)
+
