@@ -16,8 +16,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # -------------------------------------------------
 # SESSION / COOKIE CONFIG
 # -------------------------------------------------
-app.config['SESSION_COOKIE_SECURE'] = False     # False for local HTTP, True for HTTPS/Ngrok
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'   # Lax for local testing, None for Ngrok
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+  # Lax for local testing, None for Ngrok
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_NAME'] = 'career_session'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
@@ -307,6 +308,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
 
 
