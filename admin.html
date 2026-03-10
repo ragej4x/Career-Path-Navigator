@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Career Path Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .login-section {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-form h2 {
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Admin Dashboard Styles */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            color: #333;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .users-table, .questions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .users-table th, .questions-table th {
+            background: #f0f0f0;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .users-table td, .questions-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .users-table tr:hover, .questions-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .add-question-form {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 15px;
+        }
+
+        .add-question-form input,
+        .add-question-form select,
+        .add-question-form textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .add-question-form input:focus,
+        .add-question-form select:focus,
+        .add-question-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-btn {
+            background: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .add-btn:hover {
+            background: #229954;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .strand-flag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: #999;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stat-card.strand-stat {
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-card.strand-stat.stem {
+            border-left-color: #e74c3c;
+        }
+
+        .stat-card.strand-stat.humss {
+            border-left-color: #3498db;
+        }
+
+        .stat-card.strand-stat.abm {
+            border-left-color: #f39c12;
+        }
+
+        .stat-card.strand-stat.tvl {
+            border-left-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <form class="login-form" id="adminLoginForm">
+                <h2>Admin Login</h2>
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername"  required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword"  required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="dashboard">
+            <div class="dashboard-header">
+                <h1>🛡️ Admin Dashboard</h1>
+                <button class="btn logout-btn" onclick="adminLogout()">Logout</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('users')">Users Management</button>
+                <button class="tab-btn" onclick="switchTab('questions')">Questions Management</button>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-container" id="statsContainer">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="stat-number" id="totalUsersCount">0</div>
+                    <div class="stat-label">Registered</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Questions</h3>
+                    <div class="stat-number" id="totalQuestionsCount">0</div>
+                    <div class="stat-label">In Database</div>
+                </div>
+                <div class="stat-card stem strand-stat">
+                    <h3>STEM Questions</h3>
+                    <div class="stat-number" id="stemCount">0</div>
+                </div>
+                <div class="stat-card humss strand-stat">
+                    <h3>HUMSS Questions</h3>
+                    <div class="stat-number" id="humssCount">0</div>
+                </div>
+                <div class="stat-card abm strand-stat">
+                    <h3>ABM Questions</h3>
+                    <div class="stat-number" id="abmCount">0</div>
+                </div>
+                <div class="stat-card tvl strand-stat">
+                    <h3>TVL Questions</h3>
+                    <div class="stat-number" id="tvlCount">0</div>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="usersTab" class="tab-content active">
+                <h2>All Users</h2>
+                <div id="usersAlert"></div>
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #999;">Loading users...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Questions Tab -->
+            <div id="questionsTab" class="tab-content">
+                <h2>Manage Questions</h2>
+                <div id="questionsAlert"></div>
+
+                <div class="add-question-form">
+                    <h3>Add New Question</h3>
+                    <div class="form-row">
+                        <input type="text" id="newQuestionText" placeholder="Enter question text" maxlength="500">
+                        <select id="newQuestionStrand">
+                            <option value="">Select Strand</option>
+                            <option value="STEM">STEM</option>
+                            <option value="HUMSS">HUMSS</option>
+                            <option value="ABM">ABM</option>
+                            <option value="TVL">TVL</option>
+                        </select>
+                    </div>
+                    <button class="add-btn" onclick="addQuestion()">Add Question</button>
+                </div>
+
+                <table class="questions-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Question</th>
+                            <th>Strand</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="questionsTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #999;">Loading questions...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Initialize on page load - Show login form by default
+        document.addEventListener('DOMContentLoaded', () => {
+            showLogin();
+        });
+
+        // Admin Login Handler
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            const result = await apiCall('/admin/login', 'POST', { username, password });
+            
+            if (result.ok) {
+                showDashboard();
+                loadUsers();
+                loadQuestions();
+            } else {
+                alert(result.data.error || 'Login failed');
+            }
+        });
+
+        function showLogin() {
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('dashboardSection').classList.remove('active');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').classList.add('active');
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Load Users
+        async function loadUsers() {
+            const result = await apiCall('/admin/users', 'GET');
+            const tbody = document.getElementById('usersTableBody');
+
+            if (result.ok) {
+                const users = result.data;
+                // Update user count stat
+                document.getElementById('totalUsersCount').textContent = users.length;
+                
+                if (users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">No users found</td></tr>';
+                } else {
+                    tbody.innerHTML = users.map(user => `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <button class="delete-btn" onclick="deleteUser(${user.id}, '${user.username}')">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #e74c3c;">Error loading users</td></tr>';
+            }
+        }
+
+        // Delete User
+        async function deleteUser(userId, username) {
+            if (!confirm(`Are you sure you want to delete user "${username}"?`)) return;
+
+            const result = await apiCall(`/admin/delete-user/${userId}`, 'DELETE');
+            const alertDiv = document.getElementById('usersAlert');
+
+            if (result.ok) {
+                showAlert('usersAlert', 'User deleted successfully', 'success');
+                loadUsers();
+            } else {
+                showAlert('usersAlert', result.data.error || 'Failed to delete user', 'error');
+            }
+        }
+
+        // Load Questions
+        async function loadQuestions() {
+            const result = await apiCall('/questions', 'GET');
+            const tbody = document.getElementById('questionsTableBody');
+
+            if (result.ok) {
+                const questions = result.data;
+                
+                // Update total questions count
+                document.getElementById('totalQuestionsCount').textContent = questions.length;
+                
+                // Calculate strand counts
+                const strandCounts = {
+                    STEM: 0,
+                    HUMSS: 0,
+                    ABM: 0,
+                    TVL: 0
+                };
+                
+                questions.forEach(q => {
+                    if (strandCounts.hasOwnProperty(q.strand)) {
+                        strandCounts[q.strand]++;
+                    }
+                });
+                
+                // Update strand stats
+                document.getElementById('stemCount').textContent = strandCounts.STEM;
+                document.getElementById('humssCount').textContent = strandCounts.HUMSS;
+                document.getElementById('abmCount').textContent = strandCounts.ABM;
+                document.getElementById('tvlCount').textContent = strandCounts.TVL;
+                
+                if (questions.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">No questions found</td></tr>';
+                } else {
+                    tbody.innerHTML = questions.map(q => `
+                        <tr>
+                            <td>${q.id}</td>
+                            <td>${q.question_text}</td>
+                            <td><span class="strand-flag">${q.strand}</span></td>
+                            <td>
+                                <button class="delete-btn" onclick="deleteQuestion(${q.id})">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #e74c3c;">Error loading questions</td></tr>';
+            }
+        }
+
+        // Add Question
+        async function addQuestion() {
+            const questionText = document.getElementById('newQuestionText').value;
+            const strand = document.getElementById('newQuestionStrand').value;
+
+            if (!questionText || !strand) {
+                showAlert('questionsAlert', 'Please fill in all fields', 'error');
+                return;
+            }
+
+            const result = await apiCall('/admin/questions/add', 'POST', {
+                question_text: questionText,
+                strand: strand
+            });
+
+            if (result.ok) {
+                showAlert('questionsAlert', 'Question added successfully', 'success');
+                document.getElementById('newQuestionText').value = '';
+                document.getElementById('newQuestionStrand').value = '';
+                loadQuestions();
+            } else {
+                showAlert('questionsAlert', result.data.error || 'Failed to add question', 'error');
+            }
+        }
+
+        // Delete Question
+        async function deleteQuestion(questionId) {
+            if (!confirm('Are you sure you want to delete this question?')) return;
+
+            const result = await apiCall(`/admin/questions/delete/${questionId}`, 'DELETE');
+
+            if (result.ok) {
+                showAlert('questionsAlert', 'Question deleted successfully', 'success');
+                loadQuestions();
+            } else {
+                showAlert('questionsAlert', result.data.error || 'Failed to delete question', 'error');
+            }
+        }
+
+        // Show Alert
+        function showAlert(elementId, message, type) {
+            const alertDiv = document.getElementById(elementId);
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
+            alertDiv.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+            
+            setTimeout(() => {
+                alertDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Admin Logout
+        async function adminLogout() {
+            await apiCall('/admin/logout', 'POST');
+            showLogin();
+        }
+    </script>
+</body>
+</html>

@@ -141,7 +141,28 @@
             e.preventDefault();
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            await login(user, pass);
+            const errorMsg = document.getElementById('errorMsg');
+            const loadingMsg = document.getElementById('loadingMsg');
+            
+            // Clear previous errors
+            errorMsg.style.display = 'none';
+            errorMsg.textContent = '';
+            
+            // Show loading state
+            loadingMsg.style.display = 'block';
+            
+            const result = await apiCall('/login', 'POST', { username: user, password: pass });
+            
+            loadingMsg.style.display = 'none';
+            
+            if (result.ok) {
+                localStorage.setItem('username', result.data.username);
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'index.html';
+            } else {
+                errorMsg.textContent = result.data?.error || 'Login failed. Please try again.';
+                errorMsg.style.display = 'block';
+            }
         });
     </script>
 </body>

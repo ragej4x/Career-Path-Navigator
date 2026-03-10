@@ -129,115 +129,7 @@
    These questions are for incoming Grade 11 students, Answering these questions will give you recommendations on what strand to pick.
   </p>
   <form id="quizForm">
-
-    <!-- STEM Questions -->
-    <div class="form-group">
-      <p>Do you like solving math problems?</p>
-      <label><input type="radio" name="q1" value="yes" data-strand="STEM"> Yes</label>
-      <label><input type="radio" name="q1" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you enjoy doing science experiments?</p>
-      <label><input type="radio" name="q2" value="yes" data-strand="STEM"> Yes</label>
-      <label><input type="radio" name="q2" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you like working with computers or technology?</p>
-      <label><input type="radio" name="q3" value="yes" data-strand="STEM"> Yes</label>
-      <label><input type="radio" name="q3" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you enjoy analyzing or figuring out how things work?</p>
-      <label><input type="radio" name="q4" value="yes" data-strand="STEM"> Yes</label>
-      <label><input type="radio" name="q4" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you like science or experimenting?</p>
-      <label><input type="radio" name="q5" value="yes" data-strand="STEM"> Yes</label>
-      <label><input type="radio" name="q5" value="no"> No</label>
-    </div>
-
-    <!-- HUMSS Questions -->
-    <div class="form-group">
-      <p>Do you like writing or reading?</p>
-      <label><input type="radio" name="q6" value="yes" data-strand="HUMSS"> Yes</label>
-      <label><input type="radio" name="q6" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Are you interested in people and society?</p>
-      <label><input type="radio" name="q7" value="yes" data-strand="HUMSS"> Yes</label>
-      <label><input type="radio" name="q7" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you enjoy speaking or sharing ideas?</p>
-      <label><input type="radio" name="q8" value="yes" data-strand="HUMSS"> Yes</label>
-      <label><input type="radio" name="q8" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you like helping or listening to others?</p>
-      <label><input type="radio" name="q9" value="yes" data-strand="HUMSS"> Yes</label>
-      <label><input type="radio" name="q9" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Would you like a job that requires talking to many people?</p>
-      <label><input type="radio" name="q10" value="yes" data-strand="HUMSS"> Yes</label>
-      <label><input type="radio" name="q10" value="no"> No</label>
-    </div>
-
-    <!-- ABM Questions -->
-    <div class="form-group">
-      <p>Do you like business topics?</p>
-      <label><input type="radio" name="q11" value="yes" data-strand="ABM"> Yes</label>
-      <label><input type="radio" name="q11" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you enjoy planning or organizing things?</p>
-      <label><input type="radio" name="q12" value="yes" data-strand="ABM"> Yes</label>
-      <label><input type="radio" name="q12" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you like handling money or simple budgeting?</p>
-      <label><input type="radio" name="q13" value="yes" data-strand="ABM"> Yes</label>
-      <label><input type="radio" name="q13" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you want to learn about marketing or sales?</p>
-      <label><input type="radio" name="q14" value="yes" data-strand="ABM"> Yes</label>
-      <label><input type="radio" name="q14" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Are you interested in business, entrepreneurship, or marketing?</p>
-      <label><input type="radio" name="q15" value="yes" data-strand="ABM"> Yes</label>
-      <label><input type="radio" name="q15" value="no"> No</label>
-    </div>
-
-    <!-- TVL Questions -->
-    <div class="form-group">
-      <p>Do you enjoy tasks that require logical and analytical thinking?</p>
-      <label><input type="radio" name="q16" value="yes" data-strand="TVL"> Yes</label>
-      <label><input type="radio" name="q16" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you like fixing, building, or creating things?</p>
-      <label><input type="radio" name="q17" value="yes" data-strand="TVL"> Yes</label>
-      <label><input type="radio" name="q17" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you prefer practical tasks over long reading?</p>
-      <label><input type="radio" name="q18" value="yes" data-strand="TVL"> Yes</label>
-      <label><input type="radio" name="q18" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Are you interested in learning specific job skills?</p>
-      <label><input type="radio" name="q19" value="yes" data-strand="TVL"> Yes</label>
-      <label><input type="radio" name="q19" value="no"> No</label>
-    </div>
-    <div class="form-group">
-      <p>Do you like using technology or machines?</p>
-      <label><input type="radio" name="q20" value="yes" data-strand="TVL"> Yes</label>
-      <label><input type="radio" name="q20" value="no"> No</label>
-    </div>
-
+    <!-- Questions will be loaded dynamically from the database -->
     <button type="submit" class="btn">Get Recommendations</button>
   </form>
 
@@ -317,8 +209,9 @@
     }
 
     async function loadMyResults() {
-        // Use apiCall to ensure cookies are sent
+        console.log('DEBUG loadMyResults called');
         const response = await apiCall('/quiz/history', 'GET');
+        console.log('DEBUG history response', response);
 
         if (!response.ok || !response.data || response.data.length === 0) {
             document.getElementById('results').innerHTML = '<h2>My Quiz Results</h2><p style="color: #666;">No results found. Take a quiz to see your results!</p>';
@@ -329,12 +222,21 @@
         let html = '<h2>My Quiz Results</h2>';
         
         response.data.forEach((r, index) => {
+            console.log('DEBUG history record', r);
             try {
                 const data = JSON.parse(r.result_data);
+                console.log('DEBUG parsed data', data);
                 const date = new Date(r.created_at).toLocaleString();
                 const strand = data.recommended_strands ? data.recommended_strands[0] : 'N/A';
                 const scores = data.scores || {};
                 const tips = data.ai_tips || '';
+                
+                // Format AI tips (already stored in database, no re-fetching)
+                const formattedTips = tips
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/\n/g, '<br>');
                 
                 html += `
                     <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #667eea;">
@@ -349,8 +251,8 @@
                         </div>
                         ${tips ? `<div style="background: #e8f4f8; padding: 15px; border-radius: 5px; margin-top: 15px;">
                             <h4 style="color: #667eea; margin-top: 0;">🤖 AI Guidance</h4>
-                            <div style="white-space: pre-wrap; color: #555; font-size: 0.95em; line-height: 1.6;">${tips}</div>
-                        </div>` : ''}
+                            <div style="color: #555; font-size: 0.95em; line-height: 1.6;">${formattedTips}</div>
+                        </div>` : '<div style="background: #f0f0f0; padding: 15px; border-radius: 5px; margin-top: 15px; color: #999;">AI guidance not available for this result</div>'}
                     </div>
                 `;
             } catch (e) { 

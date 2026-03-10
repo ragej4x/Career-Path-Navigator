@@ -211,4 +211,45 @@ ul li {
   margin-bottom: 20px;       
 }
 
+/* Quiz Question Styling */
+.question-container {
+  background: #f8f9fa;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+}
+
+.question label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.05em;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  margin: 0;
+  cursor: pointer;
+}
+
+.options input[type="radio"] {
+  width: auto;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
 
