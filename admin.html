@@ -332,6 +332,25 @@
         .stat-card.strand-stat.tvl {
             border-left-color: #27ae60;
         }
+        /* Print styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #dashboardSection, #dashboardSection * {
+                visibility: visible;
+            }
+            #dashboardSection {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+            /* Hide interactive elements */
+            .logout-btn, .tab-btn, .delete-btn, .add-question-form, #usersAlert, #questionsAlert, #printBtn {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -355,8 +374,11 @@
         <!-- Dashboard Section -->
         <div id="dashboardSection" class="dashboard">
             <div class="dashboard-header">
-                <h1>🛡️ Admin Dashboard</h1>
-                <button class="btn logout-btn" onclick="adminLogout()">Logout</button>
+                <h1>🛡️ Career Path Navigator Admin Dashboard</h1>
+                <div>
+                    <button class="btn" id="printBtn" onclick="printDashboard()" style="margin-right:10px; background:#95a5a6;">Print</button>
+                    <button class="btn logout-btn" onclick="adminLogout()">Logout</button>
+                </div>
             </div>
 
             <div class="tabs">
@@ -502,7 +524,11 @@
 
             // Show selected tab
             document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
+            // highlight corresponding button if present
+            const btn = document.querySelector(`.tab-btn[onclick*="${tabName}"]`);
+            if (btn) {
+                btn.classList.add('active');
+            }
         }
 
         // Load Users
@@ -647,6 +673,17 @@
             setTimeout(() => {
                 alertDiv.innerHTML = '';
             }, 5000);
+        }
+
+        // Print dashboard stats and user list
+        async function printDashboard() {
+            // ensure users tab is visible and data loaded
+            switchTab('users');
+            await loadUsers();
+            // give browser a moment to render
+            setTimeout(() => {
+                window.print();
+            }, 100);
         }
 
         // Admin Logout
