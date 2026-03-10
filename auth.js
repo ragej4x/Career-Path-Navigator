@@ -1,6 +1,6 @@
 // auth.js
 // 1. Point to 127.0.0.1 explicitly to match the cookie domain
-const API_BASE = 'https://career-path-navigator-9i7q.onrender.com/api';
+const API_BASE = 'https://career-path-navigator-ifgu.onrender.com/api';
 
 // 2. Helper to send requests with Cookies (Credentials)
 async function apiCall(endpoint, method = 'GET', body = null) {
@@ -73,5 +73,6 @@ async function checkAuth() {
     const result = await apiCall('/check-auth', 'GET');
     return result.ok;
 }
+
 
 
