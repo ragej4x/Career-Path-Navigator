@@ -45,7 +45,7 @@ origins = [
     "http://localhost:9000",
     "http://127.0.0.1:9000",
     "https://ragej4x.github.io",
-    "https://career-path-navigator-9i7q.onrender.com",
+    "https://career-path-navigator-ifgu.onrender.com",
     "https://perpetuable-mable-slumberously.ngrok-free.dev"
 ]
 
@@ -308,6 +308,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
 
 
