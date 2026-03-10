@@ -10,7 +10,7 @@ import os
 # --- Configuration ---
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'M4QGSqZebCuBjpFIBCMGjTGzcODl5vG6'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://cpn:M4QGSqZebCuBjpFIBCMGjTGzcODl5vG6@dpg-d68l7pjuibrs73934ucg-a.singapore-postgres.render.com/cpn'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://rpn:IypUU9J2WgdcTXSnGhrL3jHiilSwQzAs@dpg-d6o4h5jh46gs73a6jul0-a.singapore-postgres.render.com/rpn'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # -------------------------------------------------
@@ -308,6 +308,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
 
 
